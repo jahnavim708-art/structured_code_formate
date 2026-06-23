@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+pdfplumber
+pymupdf
+transformers
+numpy
+paddleocr==2.9.1
+paddlepaddle==2.8.2
+opencv-python
+torch
+torchvision
+pillow
+pydantic
