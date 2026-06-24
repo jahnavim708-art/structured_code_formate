@@ -1,13 +1,13 @@
 import json
 
-
+#This class converts OCR grouped rows → structured JSON table (columns + rows).
 class JSONExporter:
 
     def __init__(self):
-        self.columns = None
+        self.columns = None #will store detected column structure
 
     def center_x(self, bbox):
-        return sum(p[0] for p in bbox) / 4
+        return sum(p[0] for p in bbox) / 4 #p[0] = X coordinate of each corner,average of all X values
 
     def convert(self, rows):
 
@@ -16,7 +16,7 @@ class JSONExporter:
 
         output = []
 
-        if self.columns is None:
+        if self.columns is None:   #Only detect columns once.
 
             self.columns = []
 
@@ -24,16 +24,16 @@ class JSONExporter:
 
                 self.columns.append({"name": cell["text"],"x": self.center_x(cell["bbox"])})
 
-            self.columns.sort(key=lambda x: x["x"])
+            self.columns.sort(key=lambda x: x["x"])  #Ensures correct column order based on position
 
         for row in rows[1:]:
 
             record = {col["name"]: ""for col in self.columns}
 
-            for cell in row["cells"]:
+            for cell in row["cells"]: #loop each cell in row
 
                 cell_x = self.center_x(cell["bbox"])
-
+                 #Assign word to closest column based on X position.
                 nearest = min(self.columns,key=lambda c:abs(c["x"] - cell_x))
 
                 if record[nearest["name"]]:

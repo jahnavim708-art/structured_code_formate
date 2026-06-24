@@ -91,7 +91,7 @@ def process_borderless_table(pdf_path):
 
     all_records = []
 
-    for page_idx, page in enumerate(pages):
+    for page_idx, page in enumerate(pages): #page_idx = 0 , page = page1_image
 
         print("\n" + "=" * 60)
         print(f"PAGE {page_idx + 1}/{len(pages)}")
@@ -101,7 +101,7 @@ def process_borderless_table(pdf_path):
 
         print(f"Tables found: {len(tables)}")
 
-        for table_idx, table_box in enumerate(tables):
+        for table_idx, table_box in enumerate(tables): #loops through detected tables
 
             print(f"\nProcessing table "f"{table_idx + 1}/{len(tables)}")
 
@@ -118,7 +118,8 @@ def process_borderless_table(pdf_path):
                 y2 = min(page.shape[0], y2 + pad)
 
                 table_img = page[y1:y2,x1:x2]
-
+                
+                #Adds 10-pixel white margin around image.
                 table_img = cv2.copyMakeBorder(table_img,10, 10, 10, 10,cv2.BORDER_CONSTANT,value=(255, 255, 255))
 
                 if table_img.size == 0:
