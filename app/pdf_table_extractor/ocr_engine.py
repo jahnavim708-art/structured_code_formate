@@ -5,11 +5,11 @@ class OCREngine:
 
     def __init__(self):
 
-        self.ocr = PaddleOCR(use_angle_cls=True,lang="en")
+        self.ocr = PaddleOCR(use_angle_cls=True,lang="en") #This loads the OCR engine.
 
     def extract(self, image):
 
-        result = self.ocr.ocr(image)
+        result = self.ocr.ocr(image) #Sends image to PaddleOCR,Gets detected text + coordinates
 
         words = []
 
@@ -20,4 +20,4 @@ class OCREngine:
 
             words.append({"bbox": line[0],"text": line[1][0]})
 
-        return words
+        return words  #returns "text","bbox(boundingbox-->Where exactly is this text located in the image)"
