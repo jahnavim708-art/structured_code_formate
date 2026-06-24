@@ -7,6 +7,8 @@ def clean_text(text: str):
 
     # remove CID artifacts like (cid:9)
     text = re.sub(r"\(cid:\d+\)", "", text)
+    # 🔥 REMOVE NEW LINES FIRST
+    text = text.replace("\n", " ").replace("\r", " ")
 
     # remove non-printable junk
     text = re.sub(r"[^\x20-\x7E\n]", " ", text)
