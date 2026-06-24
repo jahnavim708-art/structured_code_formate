@@ -25,7 +25,7 @@ def process_pdf(pdf_path: str):
             # ----------------------------
             # OUTSIDE DATA (CLEANED)
             # ----------------------------
-            page_text = clean_text(page.extract_text())
+            #page_text = clean_text(page.extract_text())
 
             words = page.extract_words()
             tables = page.find_tables()

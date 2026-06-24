@@ -18,12 +18,9 @@ def is_good_table(table_data):
 
     for row in table_data[1:]:
 
-        filled = sum(
-            1 for cell in row
-            if cell and str(cell).strip()
-        )
+        filled = sum(1 for cell in row if cell and str(cell).strip())#For each row, it counts how many non-empty cells exist.
 
         if filled >= max(1, len(header) // 2):
             valid_rows += 1
 
-    return valid_rows > 0
+    return valid_rows > 0 #Table is valid ONLY if at least one good row exists.
