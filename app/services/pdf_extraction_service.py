@@ -10,42 +10,26 @@ from app.extractors.hdfc_extractors import extract_transactions
 from app.services.hybrid_pdf_service import (process_hybrid_pdf)
 
 
-async def extract_table_from_pdf(
-    request: PDFRequest
-):
+
+async def extract_table_from_pdf(request: PDFRequest):
     try:
 
-        pdf_bytes = base64.b64decode(
-            request.pdf_base64
-        )
+        pdf_bytes = base64.b64decode(request.pdf_base64)
 
-        with tempfile.NamedTemporaryFile(
-            delete=False,
-            suffix=".pdf"
-        ) as temp_pdf:
+        with tempfile.NamedTemporaryFile(delete=False,suffix=".pdf") as temp_pdf:
 
             temp_pdf.write(pdf_bytes)
             pdf_path = temp_pdf.name
 
-        table_data, outside_data = (
-            process_hybrid_pdf(pdf_path)
-        )
-        transaction_data = (
-            extract_transactions(pdf_path)
-        )
+        table_data, outside_data = (process_hybrid_pdf(pdf_path))
+        transaction_data = (extract_transactions(pdf_path))
 
         os.remove(pdf_path)
 
         if not table_data:
-            raise HTTPException(
-                status_code=404,
-                detail="No table found"
-            )
-
-        rows = [
-            r for r in table_data
-            if isinstance(r, list)
-        ]
+            raise HTTPException(status_code=404,detail="No table found")
+        #table-->json
+        rows = [r for r in table_data if isinstance(r, list)]
 
         headers = rows[0]
         data_rows = rows[1:]
@@ -58,11 +42,7 @@ async def extract_table_from_pdf(
 
             for i, col in enumerate(headers):
 
-                obj[col] = (
-                    row[i]
-                    if i < len(row)
-                    else ""
-                )
+                obj[col] = (row[i]if i < len(row) else "")
 
             json_data.append(obj)
 
@@ -70,14 +50,9 @@ async def extract_table_from_pdf(
 
             for k, v in r.items():
 
-                if (
-                    v is None
-                    or (
-                        isinstance(v, float)
-                        and np.isnan(v)
-                    )
-                ):
+                if (v is None or (isinstance(v, float) and np.isnan(v))):
                     r[k] = ""
+
 
         result = {
             "status": "success",
@@ -90,13 +65,10 @@ async def extract_table_from_pdf(
         # ============================
         # SAVE OUTPUT TO JSON FILE
         # ============================
-        output_dir = "BOB"
+        output_dir = "axis"
         os.makedirs(output_dir, exist_ok=True)
 
-        output_file = os.path.join(
-            output_dir,
-            f"{request.file_name or 'output'}.json"
-        )
+        output_file = os.path.join(output_dir,f"{request.file_name or 'output'}.json")
 
         with open(output_file, "w", encoding="utf-8") as f:
             json.dump(result, f, indent=4, ensure_ascii=False)

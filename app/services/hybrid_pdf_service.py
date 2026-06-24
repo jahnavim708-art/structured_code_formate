@@ -17,33 +17,21 @@ def process_hybrid_pdf(pdf_path):
         "\nTrying structured table extraction..."
     )
 
-    table_data, outside_data = (
-        process_pdf(pdf_path)
-    )
+    table_data, outside_data = (process_pdf(pdf_path))
 
     if is_good_table(table_data):
 
-        print(
-            "✓ Structured table detected"
-        )
+        print("✓ Structured table detected")
 
-        print(
-            "✓ Using pdfplumber extraction"
-        )
+        print("✓ Using pdfplumber extraction")
 
         return table_data, outside_data
 
-    print(
-        "✗ Structured extraction failed"
-    )
+    print("✗ Structured extraction failed")
 
-    print(
-        "✓ Switching to OCR extraction"
-    )
+    print("✓ Switching to OCR extraction")
 
-    records = process_borderless_table(
-        pdf_path
-    )
+    records = process_borderless_table(pdf_path)
 
     if not records:
         return [], outside_data
@@ -54,11 +42,6 @@ def process_hybrid_pdf(pdf_path):
 
     for row in records:
 
-        converted_table.append(
-            [
-                row.get(h, "")
-                for h in headers
-            ]
-        )
+        converted_table.append([row.get(h, "")for h in headers])
 
     return converted_table, outside_data
