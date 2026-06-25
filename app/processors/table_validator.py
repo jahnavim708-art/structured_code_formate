@@ -23,4 +23,5 @@ def is_good_table(table_data):
         if filled >= max(1, len(header) // 2):
             valid_rows += 1
 
-    return valid_rows > 0 #Table is valid ONLY if at least one good row exists.
+    return valid_rows > 0 #Table is valid ONLY if at least one good row exists.  
+    #if [["Date","Amt"],["01-01","100"]]--> True   [["Date","Amt"]]-->False

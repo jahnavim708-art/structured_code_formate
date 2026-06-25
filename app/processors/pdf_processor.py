@@ -70,3 +70,14 @@ def process_pdf(pdf_path: str):
                     outside_data[k] = v   # ONLY ONCE
 
     return table_data, outside_data
+
+# table_data[
+#     ["Date", "Description", "Amount"],
+#     ["01-01-2025", "ATM Withdrawal", "500"],
+#     ["02-01-2025", "UPI Transfer", "1000"]
+# ]
+# outside_data{
+#     "Account Number": "123456789",
+#     "Customer Name": "John Doe",
+#     "Branch": "Hyderabad"
+# }
