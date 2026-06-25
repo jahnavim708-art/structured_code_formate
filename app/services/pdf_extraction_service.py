@@ -23,7 +23,7 @@ async def extract_table_from_pdf(request: PDFRequest):
 
         table_data, outside_data = (process_hybrid_pdf(pdf_path))
         transaction_data = (extract_transactions(pdf_path))
-
+        
         os.remove(pdf_path)
 
         if not table_data:
@@ -65,7 +65,7 @@ async def extract_table_from_pdf(request: PDFRequest):
         # ============================
         # SAVE OUTPUT TO JSON FILE
         # ============================
-        output_dir = "axis"
+        output_dir = "hdfc"
         os.makedirs(output_dir, exist_ok=True)
 
         output_file = os.path.join(output_dir,f"{request.file_name or 'output'}.json")

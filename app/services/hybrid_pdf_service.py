@@ -9,7 +9,9 @@ from app.processors.table_validator import (
 from app.pdf_table_extractor.extractor import (
     process_borderless_table
 )
-
+from app.extractors.hdfc_extractors import (
+    extract_transactions
+)
 
 def process_hybrid_pdf(pdf_path):
 
