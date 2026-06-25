@@ -156,6 +156,8 @@ def extract_transactions(pdf_path):
                     k: v.strip()
                     for k, v in line_data.items()
                 }
+                
+                
 
                 if not any(line_data.values()):
                     continue

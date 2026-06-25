@@ -15,8 +15,8 @@ def extract_transactions(pdf_path):
 
     with pdfplumber.open(pdf_path) as pdf:
 
-        columns = []
-        headers = []
+        columns = [] #Stores column boundaries.
+        headers = [] #Stores column names.
         current_row = None
 
         for page in pdf.pages:
